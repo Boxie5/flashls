@@ -22,8 +22,9 @@ package org.mangui.hls {
     import org.mangui.hls.playlist.AltAudioTrack;
     import org.mangui.hls.stream.HLSNetStream;
     import org.mangui.hls.stream.StreamBuffer;
-    import org.mangui.hls.utils.Http;
+    /*import org.mangui.hls.utils.Http;*/
     import org.mangui.hls.utils.Log;
+    /*import org.mangui.hls.utils.Log;*/
     import org.mangui.hls.utils.QURLLoader;
 
     CONFIG::LOGGING {
@@ -200,6 +201,7 @@ package org.mangui.hls {
 
         /** Load and parse a new HLS URL **/
         public function load(url : String) : void {
+            Log.warn("ascn");
             _level = 0;
             _hlsNetStream.close();
             _levelLoader.load(url);
