@@ -22,6 +22,9 @@ package org.mangui.hls {
     import org.mangui.hls.playlist.AltAudioTrack;
     import org.mangui.hls.stream.HLSNetStream;
     import org.mangui.hls.stream.StreamBuffer;
+    import org.mangui.hls.utils.Http;
+    import org.mangui.hls.utils.Log;
+    import org.mangui.hls.utils.QURLLoader;
 
     CONFIG::LOGGING {
         import org.mangui.hls.utils.Log;
