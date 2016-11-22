@@ -42,5 +42,16 @@ package org.mangui.hls.utils {
             }
             return s;
         }
+
+        public static function toString(hex:String):String {
+            var a:ByteArray = toArray(hex);
+            return a.readUTFBytes(a.length);
+        }
+
+        public static function fromString(str:String, colons:Boolean=false):String {
+            var a:ByteArray = new ByteArray;
+            a.writeUTFBytes(str);
+            return fromArray(a, colons);
+        }
     }
 }

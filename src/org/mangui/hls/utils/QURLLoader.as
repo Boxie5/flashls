@@ -5,6 +5,7 @@ package org.mangui.hls.utils {
     import flash.net.URLRequest;
     import flash.net.URLLoader;
     import flash.net.URLVariables;
+    import flash.net.URLRequestHeader;
     import flash.events.Event;
     import flash.events.ErrorEvent;
     import flash.events.IOErrorEvent;
@@ -28,6 +29,12 @@ package org.mangui.hls.utils {
 
         public function type(mtype: String):QURLLoader {
             Log.warn("TODO> set request mimetype");
+            return this;
+        }
+
+        public function header(key: String, value: String): QURLLoader {
+            var headItem: URLRequestHeader = new URLRequestHeader(key, value);
+            this._tempReq.requestHeaders.push(headItem);
             return this;
         }
 

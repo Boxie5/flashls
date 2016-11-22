@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mangui.hls {
 
+    import flash.utils.ByteArray;
     import flash.display.Stage;
     import flash.events.Event;
     import flash.events.EventDispatcher;
@@ -22,10 +23,8 @@ package org.mangui.hls {
     import org.mangui.hls.playlist.AltAudioTrack;
     import org.mangui.hls.stream.HLSNetStream;
     import org.mangui.hls.stream.StreamBuffer;
-    /*import org.mangui.hls.utils.Http;*/
     import org.mangui.hls.utils.Log;
-    /*import org.mangui.hls.utils.Log;*/
-    import org.mangui.hls.utils.QURLLoader;
+    import org.mangui.hls.service.QService;
 
     CONFIG::LOGGING {
         import org.mangui.hls.utils.Log;
@@ -201,7 +200,13 @@ package org.mangui.hls {
 
         /** Load and parse a new HLS URL **/
         public function load(url : String) : void {
-            Log.warn("ascn");
+            try {
+                QService.getQkey(function(): void{});
+            }
+            catch (e:Error) {
+                Log.warn(e);
+            }
+
             _level = 0;
             _hlsNetStream.close();
             _levelLoader.load(url);
