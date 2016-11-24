@@ -10,7 +10,7 @@ package org.mangui.hls.service {
     import org.mangui.hls.utils.*;
 
     public class QService {
-        private static const _SERVICE_HOST:String = "jedi.qiniuapi.com";
+        private static const _SERVICE_HOST:String = "jedi.dev.qiniuapi.com";
 
         private static function _getCurrentUrl(): String {
             return ExternalInterface.call("window.location.href.toString");
@@ -43,7 +43,7 @@ package org.mangui.hls.service {
             return Base64.encode(sign);
         }
 
-        public static function getQkey(cb: Function): void {
+        public static function getQkey(cb: Function, fb: Function): void {
             var variables:URLVariables = _getUrlStringParams(_getCurrentUrl());
             var hub:String = variables.hub || "";
             var vkey:String = variables.vkey || "";
@@ -57,12 +57,17 @@ package org.mangui.hls.service {
                         + encodedSign + ":"
                         + encodedTimestamp;
 
-            var url:String = "https://"
+            /*var url:String = "https://"*/
+            var url:String = "http://"
                         + _SERVICE_HOST + "/v1/hubs/"
                         + hub + "/videos/"
                         + encodedVkey + "/qkey";
+            Log.warn("====================================");
+            Log.warn(url);
+            Log.warn(jediXToken);
+            Log.warn("====================================");
 
-            Http.get(url).cb(cb).header("Authorization", jediXToken).send();
+            Http.get(url).cb(cb).fb(fb).header("Authorization", jediXToken).send();
         }
     }
 }

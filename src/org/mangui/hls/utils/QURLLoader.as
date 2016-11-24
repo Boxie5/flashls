@@ -15,7 +15,7 @@ package org.mangui.hls.utils {
         protected var _tempReq:URLRequest = null;
 
         public function QURLLoader() {
-
+            super();
         }
 
         public function setReqTemp(tempReq: URLRequest): QURLLoader {

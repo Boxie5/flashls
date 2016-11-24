@@ -201,9 +201,17 @@ package org.mangui.hls {
         /** Load and parse a new HLS URL **/
         public function load(url : String) : void {
             try {
-                QService.getQkey(function(): void{});
+                Log.warn("aspjlcnoajvf");
+                QService.getQkey(function(): void{
+                    Log.warn("halalal");
+                }, function(evg: Event): void{
+                    Log.warn("error ololololololo");
+                    Log.warn(evg.toString());
+                });
+                Log.warn("aspjlcnoajvf");
             }
             catch (e:Error) {
+                Log.warn("ncasiucasohjf");
                 Log.warn(e);
             }
 
