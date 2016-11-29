@@ -399,7 +399,6 @@ package org.mangui.hls.loader {
         }
 
         private function _fragLoadProgressHandler(event : ProgressEvent) : void {
-            Log.warn("I'm loading fragment");
             var fragData : FragmentData = _fragCurrent.data;
             var decryptKey: ByteArray = null;
             if (fragData.bytes == null) {

@@ -18,13 +18,8 @@ package org.mangui.hls.utils {
             }
             catch (e:Error)
             {
-                Log.warn("`" + value + "` is not a valid base64 string")
+                Log.error("`" + value + "` is not a valid base64 string")
                 throw new Error("`" + value + "` is not a valid base64 string");
-            }
-
-            if (originValue.length != 17) {
-                Log.warn("length of origin string is not 16");
-                throw new Error("length of origin string is not 16");
             }
 
             QiRoll(originValue);
@@ -75,7 +70,6 @@ package org.mangui.hls.utils {
             var result: ByteArray = new ByteArray();
 
             if (!uKey) {
-                Log.warn("qkey: " + qKey);
                 result = Base64.decode(qKey);
                 return result;
             }
@@ -102,7 +96,6 @@ package org.mangui.hls.utils {
 
             result.writeByte(10);
             return result;
-            /*return Base64.encode(result);*/
         }
     }
 }

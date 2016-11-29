@@ -20,14 +20,14 @@ package org.mangui.hls.utils {
 
         public static function getCurrentHub(): String {
             if (ExternalInterface) {
-                return ExternalInterface.call("Jedi.Bridge.currentHub") || "";
+                return ExternalInterface.call("Jedi.Bridge.getCurrentHub") || "";
             }
             return "";
         }
 
         public static function getCurrentVkey(): String {
             if (ExternalInterface) {
-                return ExternalInterface.call("Jedi.Bridge.currentVkey") || "";
+                return ExternalInterface.call("Jedi.Bridge.getCurrentVkey") || "";
             }
             return "";
         }

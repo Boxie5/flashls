@@ -7,6 +7,7 @@ package org.mangui.hls.model {
     import flash.utils.ByteArray;
     import org.mangui.hls.flv.FLVTag;
     import org.mangui.hls.utils.Log;
+    import by.blooddy.crypto.Base64;
 
     /** Fragment model **/
     public class Fragment {
@@ -56,7 +57,6 @@ package org.mangui.hls.model {
             this.tag_list = tag_list;
             data = new FragmentData();
 
-            Log.warn(this.q_drm_fkey + ", " + this.decrypt_iv + ", " + this.decrypt_url);
             // CONFIG::LOGGING {
             // Log.info("Frag["+seqnum+"]:duration/start_time,cc="+duration+","+start_time+","+continuity);
             // }

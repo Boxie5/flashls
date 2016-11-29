@@ -10,23 +10,23 @@ package org.mangui.hls.utils {
     import flash.events.IOErrorEvent;
     import flash.events.SecurityErrorEvent;
 
-    public final class QURLLoader extends URLLoader {
+    public final class QiURLLoader extends URLLoader {
         protected var _tempReq:URLRequest = null;
 
-        public function QURLLoader() {
+        public function QiURLLoader() {
             super();
         }
 
-        public function setReqTemp(tempReq: URLRequest): QURLLoader {
+        public function setReqTemp(tempReq: URLRequest): QiURLLoader {
             if (this._tempReq) {
-                Log.error("QURLLoader.reqTemp can be set for only once");
+                Log.error("QiURLLoader.reqTemp can be set for only once");
             } else {
                 this._tempReq = tempReq;
             }
             return this;
         }
 
-        public function type(mtype: String):QURLLoader {
+        public function type(mtype: String):QiURLLoader {
             mtype = mtype.toLowerCase();
             switch (mtype)
             {
@@ -42,13 +42,13 @@ package org.mangui.hls.utils {
             return this;
         }
 
-        public function header(key: String, value: String): QURLLoader {
+        public function header(key: String, value: String): QiURLLoader {
             var headItem: URLRequestHeader = new URLRequestHeader(key, value);
             this._tempReq.requestHeaders.push(headItem);
             return this;
         }
 
-        public function setData(_data:Object = null):QURLLoader {
+        public function setData(_data:Object = null):QiURLLoader {
             try{
                 var dataToSend:URLVariables = new URLVariables();
                 if (_data) {
@@ -67,7 +67,7 @@ package org.mangui.hls.utils {
             }
         }
 
-        public function send():QURLLoader {
+        public function send():QiURLLoader {
             try{
                 this.load(_tempReq);
             }
@@ -80,9 +80,9 @@ package org.mangui.hls.utils {
             }
         }
 
-        public function cb(callback: Function):QURLLoader {
+        public function cb(callback: Function):QiURLLoader {
             try{
-                var self:QURLLoader = this;
+                var self:QiURLLoader = this;
                 /*this.addEventListener(Event.COMPLETE, callback);*/
                 this.addEventListener(Event.COMPLETE, function():void {
                     callback(self.data);
@@ -97,7 +97,7 @@ package org.mangui.hls.utils {
             }
         }
 
-        public function fb(failback: Function):QURLLoader {
+        public function fb(failback: Function):QiURLLoader {
             try{
                 this.addEventListener(IOErrorEvent.IO_ERROR, failback);
                 this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, failback);

@@ -100,8 +100,8 @@ package org.mangui.hls.service {
 
         public static function getQkey(cb: Function, fb: Function): void {
             var variables: URLVariables = _getUrlStringParams(_getCurrentUrl());
-            var hub: String = variables.hub || "";
-            var vkey: String = variables.vkey || "";
+            var hub: String = QiBridge.getCurrentHub() || variables.hub || "";
+            var vkey: String = QiBridge.getCurrentVkey() || variables.vkey || "";
             var jediXToken: String = getJediXAuthorization(hub, vkey);
             var url: String = genGetQkeyUrl(hub, vkey);
 

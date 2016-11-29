@@ -25,6 +25,7 @@ package org.mangui.hls {
     import org.mangui.hls.stream.StreamBuffer;
     import org.mangui.hls.utils.*;
     import org.mangui.hls.service.*;
+    import by.blooddy.crypto.Base64;
 
     CONFIG::LOGGING {
         import org.mangui.hls.utils.Log;
@@ -200,39 +201,6 @@ package org.mangui.hls {
 
         /** Load and parse a new HLS URL **/
         public function load(url : String) : void {
-            /*Log.warn(QService.getQAuthorization("PUT", "jedi.dev.qiniuapi.com", "/v1/hubs/test/protection/2"));*/
-            /*Log.warn(QiFKey.QiFKeyGen("MDEyMzQ1Njc4OWFiY2RlZgo="));*/
-            /*Log.warn(QiFKey.QiFKeyGen("MDEyMzQ1Njc4OWFiY2RlZgo=", "ODU4ODkwMjFpenVqb2NpMQo="));*/
-
-            /*try
-            {
-                QService.testHttp();
-            }
-            catch (e:Error)
-            {
-                Log.warn('caisodpjgjk');
-                Log.warn(e);
-            }
-            finally
-            {
-
-            }*/
-
-            /*try {
-                Log.warn("begin to send");
-                QService.getQkey(function(): void{
-                    Log.warn("send success");
-                }, function(e: Event): void{
-                    Log.warn("send error event");
-                    Log.warn(e.toString());
-                });
-                Log.warn("send over");
-            }
-            catch (e:Error) {
-                Log.warn("execute error");
-                Log.warn(e);
-            }*/
-
             _level = 0;
             _hlsNetStream.close();
             if (QiBridge.isDRMEnabled()) {
@@ -247,7 +215,9 @@ package org.mangui.hls {
                     }
                     catch (e:Error)
                     {
-                        Log.error(e);
+                        CONFIG::LOGGING {
+                            Log.error(e);
+                        }
                     }
                 },function(): void{});
             } else {
