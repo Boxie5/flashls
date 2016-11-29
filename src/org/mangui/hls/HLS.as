@@ -23,8 +23,8 @@ package org.mangui.hls {
     import org.mangui.hls.playlist.AltAudioTrack;
     import org.mangui.hls.stream.HLSNetStream;
     import org.mangui.hls.stream.StreamBuffer;
-    import org.mangui.hls.utils.Log;
-    import org.mangui.hls.service.QService;
+    import org.mangui.hls.utils.*;
+    import org.mangui.hls.service.*;
 
     CONFIG::LOGGING {
         import org.mangui.hls.utils.Log;
@@ -200,24 +200,59 @@ package org.mangui.hls {
 
         /** Load and parse a new HLS URL **/
         public function load(url : String) : void {
-            try {
-                Log.warn("aspjlcnoajvf");
-                QService.getQkey(function(): void{
-                    Log.warn("halalal");
-                }, function(evg: Event): void{
-                    Log.warn("error ololololololo");
-                    Log.warn(evg.toString());
-                });
-                Log.warn("aspjlcnoajvf");
+            /*Log.warn(QService.getQAuthorization("PUT", "jedi.dev.qiniuapi.com", "/v1/hubs/test/protection/2"));*/
+            /*Log.warn(QiFKey.QiFKeyGen("MDEyMzQ1Njc4OWFiY2RlZgo="));*/
+            /*Log.warn(QiFKey.QiFKeyGen("MDEyMzQ1Njc4OWFiY2RlZgo=", "ODU4ODkwMjFpenVqb2NpMQo="));*/
+
+            /*try
+            {
+                QService.testHttp();
             }
-            catch (e:Error) {
-                Log.warn("ncasiucasohjf");
+            catch (e:Error)
+            {
+                Log.warn('caisodpjgjk');
                 Log.warn(e);
             }
+            finally
+            {
+
+            }*/
+
+            /*try {
+                Log.warn("begin to send");
+                QService.getQkey(function(): void{
+                    Log.warn("send success");
+                }, function(e: Event): void{
+                    Log.warn("send error event");
+                    Log.warn(e.toString());
+                });
+                Log.warn("send over");
+            }
+            catch (e:Error) {
+                Log.warn("execute error");
+                Log.warn(e);
+            }*/
 
             _level = 0;
             _hlsNetStream.close();
-            _levelLoader.load(url);
+            if (QiBridge.isDRMEnabled()) {
+                QiService.getQkey(function(dataStr: String): void {
+                    try
+                    {
+                        var data: Object = decodeJson(dataStr);
+                        var qkey: String = data.qkey;
+                        var ukey: String = QiBridge.getUKey();
+                        var fkey: ByteArray = QiFKey.QiFKeyGen(qkey, ukey);
+                        _levelLoader.load(url, fkey);
+                    }
+                    catch (e:Error)
+                    {
+                        Log.error(e);
+                    }
+                },function(): void{});
+            } else {
+                _levelLoader.load(url);
+            }
         };
 
         /** return HLS NetStream **/

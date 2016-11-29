@@ -12,6 +12,7 @@ package org.mangui.hls.loader {
     import flash.utils.clearTimeout;
     import flash.utils.getTimer;
     import flash.utils.setTimeout;
+    import flash.utils.ByteArray;
     import org.mangui.hls.constant.HLSLoaderTypes;
     import org.mangui.hls.constant.HLSPlayStates;
     import org.mangui.hls.constant.HLSTypes;
@@ -59,6 +60,8 @@ package org.mangui.hls.loader {
         private var _altAudioTracks : Vector.<AltAudioTrack>;
         /* manifest load metrics */
         private var _metrics : HLSLoadMetrics;
+
+        private var _finalKey: ByteArray;
 
         /** Setup the loader. **/
         public function LevelLoader(hls : HLS) {
@@ -120,7 +123,8 @@ package org.mangui.hls.loader {
         }
 
         /** Load the manifest file. **/
-        public function load(url : String) : void {
+        public function load(url : String, fkey: ByteArray = null) : void {
+            _finalKey = fkey;
             if(!_urlloader) {
                 //_urlloader = new URLLoader();
                 var urlLoaderClass : Class = _hls.URLloader as Class;
@@ -179,7 +183,7 @@ package org.mangui.hls.loader {
                 CONFIG::LOGGING {
                     Log.debug("level " + level + " playlist:\n" + string);
                 }
-                frags = Manifest.getFragments(string, url, level);
+                frags = Manifest.getFragments(string, url, level, _finalKey);
             }
 
             if(frags && frags.length) {

@@ -1,17 +1,16 @@
 package org.mangui.hls.utils {
 
-    import org.mangui.hls.utils.Log;
-
     import flash.net.URLRequest;
     import flash.net.URLLoader;
     import flash.net.URLVariables;
     import flash.net.URLRequestHeader;
+    import flash.net.URLLoaderDataFormat;
     import flash.events.Event;
     import flash.events.ErrorEvent;
     import flash.events.IOErrorEvent;
     import flash.events.SecurityErrorEvent;
 
-    public class QURLLoader extends URLLoader {
+    public final class QURLLoader extends URLLoader {
         protected var _tempReq:URLRequest = null;
 
         public function QURLLoader() {
@@ -28,7 +27,18 @@ package org.mangui.hls.utils {
         }
 
         public function type(mtype: String):QURLLoader {
-            Log.warn("TODO> set request mimetype");
+            mtype = mtype.toLowerCase();
+            switch (mtype)
+            {
+                case URLLoaderDataFormat.BINARY:
+                case URLLoaderDataFormat.TEXT:
+                case URLLoaderDataFormat.VARIABLES:
+                    this.dataFormat = mtype;
+                    break;
+                default :
+                    break;
+            }
+
             return this;
         }
 
@@ -41,8 +51,8 @@ package org.mangui.hls.utils {
         public function setData(_data:Object = null):QURLLoader {
             try{
                 var dataToSend:URLVariables = new URLVariables();
-                if (data) {
-                    for (var key:String in dataToSend) {
+                if (_data) {
+                    for (var key:String in _data) {
                         dataToSend[key] = _data[key];
                     }
                 }
@@ -72,7 +82,11 @@ package org.mangui.hls.utils {
 
         public function cb(callback: Function):QURLLoader {
             try{
-                this.addEventListener(Event.COMPLETE, callback);
+                var self:QURLLoader = this;
+                /*this.addEventListener(Event.COMPLETE, callback);*/
+                this.addEventListener(Event.COMPLETE, function():void {
+                    callback(self.data);
+                });
             }
             catch (e:Error){
                 Log.error("set http request callback error");

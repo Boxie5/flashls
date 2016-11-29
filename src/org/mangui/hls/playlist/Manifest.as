@@ -138,7 +138,7 @@ package org.mangui.hls.playlist {
         }
 
         /** Extract fragments from playlist data. **/
-        public static function getFragments(data : String, base : String, level : int) : Vector.<Fragment> {
+        public static function getFragments(data : String, base : String, level : int, finalKey: ByteArray = null) : Vector.<Fragment> {
             var fragments : Vector.<Fragment> = new Vector.<Fragment>();
             var lines : Array = data.split("\n");
             // fragment seqnum
@@ -283,7 +283,7 @@ package org.mangui.hls.playlist {
                     } else {
                         fragment_decrypt_iv = null;
                     }
-                    fragments.push(new Fragment(url, duration, level, seqnum++, start_time, continuity_index, program_date, decrypt_url, fragment_decrypt_iv, byterange_start_offset, byterange_end_offset, tag_list));
+                    fragments.push(new Fragment(url, duration, level, seqnum++, start_time, continuity_index, program_date, finalKey, decrypt_url, fragment_decrypt_iv, byterange_start_offset, byterange_end_offset, tag_list));
                     start_time += duration;
                     if (program_date_defined) {
                         program_date += 1000 * duration;

@@ -1,9 +1,9 @@
 package org.mangui.hls.utils {
 
-    import org.mangui.hls.utils.QURLLoader;
-
     import flash.net.URLRequest;
     import flash.net.URLRequestMethod;
+
+    import org.mangui.hls.utils.QURLLoader;
 
     /*
     * using:
@@ -13,7 +13,7 @@ package org.mangui.hls.utils {
     *
     * Note: get/post/put should be the first one to call,
     *       while send should be the last one to call
-    *       it doesn't matter to care about order for the other functions
+    *       it doesn't make sense for the other functions's order
     */
 
     public class Http {

@@ -6,6 +6,7 @@ package org.mangui.hls.model {
     import flash.net.ObjectEncoding;
     import flash.utils.ByteArray;
     import org.mangui.hls.flv.FLVTag;
+    import org.mangui.hls.utils.Log;
 
     /** Fragment model **/
     public class Fragment {
@@ -27,6 +28,8 @@ package org.mangui.hls.model {
         public var decrypt_url : String;
         /** Initialization Vector to decrypt content **/
         public var decrypt_iv : ByteArray;
+        /** Qiniu DRM final key **/
+        public var q_drm_fkey: ByteArray;
         /** byte range start offset **/
         public var byterange_start_offset : int;
         /** byte range offset **/
@@ -37,7 +40,7 @@ package org.mangui.hls.model {
         public var tag_list : Vector.<String>;
 
         /** Create the fragment. **/
-        public function Fragment(url : String, duration : Number, level : int, seqnum : int, start_time : Number, continuity : int, program_date : Number, decrypt_url : String, decrypt_iv : ByteArray, byterange_start_offset : int, byterange_end_offset : int, tag_list : Vector.<String>) {
+        public function Fragment(url : String, duration : Number, level : int, seqnum : int, start_time : Number, continuity : int, program_date : Number, q_drm_fkey: ByteArray, decrypt_url : String, decrypt_iv : ByteArray, byterange_start_offset : int, byterange_end_offset : int, tag_list : Vector.<String>) {
             this.url = url;
             this.duration = duration;
             this.seqnum = seqnum;
@@ -45,12 +48,15 @@ package org.mangui.hls.model {
             this.start_time = start_time;
             this.continuity = continuity;
             this.program_date = program_date;
+            this.q_drm_fkey = q_drm_fkey;
             this.decrypt_url = decrypt_url;
             this.decrypt_iv = decrypt_iv;
             this.byterange_start_offset = byterange_start_offset;
             this.byterange_end_offset = byterange_end_offset;
             this.tag_list = tag_list;
             data = new FragmentData();
+
+            Log.warn(this.q_drm_fkey + ", " + this.decrypt_iv + ", " + this.decrypt_url);
             // CONFIG::LOGGING {
             // Log.info("Frag["+seqnum+"]:duration/start_time,cc="+duration+","+start_time+","+continuity);
             // }

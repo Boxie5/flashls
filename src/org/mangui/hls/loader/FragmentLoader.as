@@ -399,7 +399,9 @@ package org.mangui.hls.loader {
         }
 
         private function _fragLoadProgressHandler(event : ProgressEvent) : void {
+            Log.warn("I'm loading fragment");
             var fragData : FragmentData = _fragCurrent.data;
+            var decryptKey: ByteArray = null;
             if (fragData.bytes == null) {
                 fragData.bytes = new ByteArray();
                 fragData.bytesLoaded = 0;
@@ -407,9 +409,16 @@ package org.mangui.hls.loader {
                 _metrics.loading_begin_time = getTimer();
 
                 // decrypt data if needed
-                if (_fragCurrent.decrypt_url != null) {
+                if (_fragCurrent.q_drm_fkey != null || _fragCurrent.decrypt_url != null) {
                     _metrics.decryption_begin_time = getTimer();
-                    fragData.decryptAES = new AES(_hls.stage, _keymap[_fragCurrent.decrypt_url], _fragCurrent.decrypt_iv, _fragDecryptProgressHandler, _fragDecryptCompleteHandler);
+                    decryptKey = new ByteArray();
+                    if (_fragCurrent.q_drm_fkey) {
+                        decryptKey = _fragCurrent.q_drm_fkey;
+                    } else {
+                        decryptKey = _keymap[_fragCurrent.decrypt_url];
+                    }
+                    fragData.decryptAES = new AES(_hls.stage, decryptKey, _fragCurrent.decrypt_iv, _fragDecryptProgressHandler, _fragDecryptCompleteHandler);
+                    decryptKey = null;
                     CONFIG::LOGGING {
                         Log.debug("init AES context:" + fragData.decryptAES);
                     }
@@ -733,7 +742,7 @@ package org.mangui.hls.loader {
             _metrics.loading_request_time = getTimer();
             _fragCurrent = frag;
             frag.data.auto_level = _hls.autoLevel;
-            if (frag.decrypt_url != null) {
+            if (frag.decrypt_url != null && !frag.q_drm_fkey) {
                 if (_keymap[frag.decrypt_url] == undefined) {
                     // load key
                     CONFIG::LOGGING {
